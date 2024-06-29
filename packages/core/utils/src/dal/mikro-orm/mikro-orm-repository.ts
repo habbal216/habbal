@@ -658,18 +658,6 @@ export function mikroOrmBaseRepositoryFactory<T extends object = object>(
           joinColumnsConstraints[joinColumn] = data[referencedColumnName]
         })
 
-        if (normalizedData.length) {
-          normalizedData.forEach((normalizedDataItem: any) => {
-            Object.assign(normalizedDataItem, {
-              ...joinColumnsConstraints,
-            })
-          })
-
-          const { performedActions: performedActions_ } =
-            await this.upsertMany_(manager, relation.type, normalizedData)
-          this.mergePerformedActions(performedActions, performedActions_)
-        }
-
         const toDeleteEntities = await manager.find<any>(
           relation.type,
           {
@@ -691,6 +679,18 @@ export function mikroOrmBaseRepositoryFactory<T extends object = object>(
           performedActions.deleted[relation.type].push(
             ...toDeleteEntities.map((d) => ({ id: d.id }))
           )
+        }
+
+        if (normalizedData.length) {
+          normalizedData.forEach((normalizedDataItem: any) => {
+            Object.assign(normalizedDataItem, {
+              ...joinColumnsConstraints,
+            })
+          })
+
+          const { performedActions: performedActions_ } =
+            await this.upsertMany_(manager, relation.type, normalizedData)
+          this.mergePerformedActions(performedActions, performedActions_)
         }
 
         return { entities: normalizedData, performedActions }
