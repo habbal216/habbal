@@ -1,4 +1,4 @@
-import type { AdminOptions } from "@medusajs/admin-ui"
+import type { AdminOptions } from "@habbaldev78y/admin-ui"
 
 export type PluginOptions = AdminOptions & {
   /**

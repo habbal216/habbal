@@ -4,3 +4,5 @@
 /build
 .vercel
 /ui/preview
+node_modules
+.git

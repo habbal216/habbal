@@ -8,6 +8,7 @@ import type {
   PriceList,
   Product,
   ProductCollection,
+  //@ts-ignore
 } from "@medusajs/medusa"
 
 import type { WidgetConfig, WidgetProps } from "@medusajs/admin-ui"

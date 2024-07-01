@@ -1,4 +1,5 @@
-import { logger } from "@medusajs/admin-ui"
+import { logger } from "@habbaldev78y/admin-ui"
+//@ts-ignore
 import type { ConfigModule } from "@medusajs/medusa"
 import { getConfigFile } from "medusa-core-utils"
 import path from "path"
@@ -8,6 +9,7 @@ function hasEnabledUI(options: Record<string, unknown>) {
 }
 
 export async function getPluginPaths() {
+  //@ts-ignore
   const { configModule, error } = getConfigFile<ConfigModule>(
     path.resolve(process.cwd()),
     "medusa-config.js"

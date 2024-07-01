@@ -1,13 +1,7 @@
 {
-  "name": "@medusajs/admin-ui",
-  "author": "Kasper Kristensen <kasper@medusajs.com>",
+  "name": "@habbaldev78y/admin-ui",
   "license": "MIT",
-  "version": "2.1.15",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/medusajs/medusa.git",
-    "directory": "packages/admin-ui"
-  },
+  "version": "0.0.2",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -135,5 +129,11 @@
     "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^5.1.1"
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "yarn@3.2.1",
+  "description": "<p align=\"center\">   <a href=\"https://www.medusajs.com\">     <img alt=\"Medusa\" src=\"https://user-images.githubusercontent.com/7554214/153162406-bf8fd16f-aa98-4604-b87b-e13ab4baf604.png\" width=\"100\" />   </a> </p> <h1 align=\"center\">   @medusajs/admin-ui </h1>",
+  "bugs": {
+    "url": "https://github.com/aftabhussain6/medusa/issues"
+  },
+  "homepage": "https://github.com/aftabhussain6/medusa#readme",
+  "author": ""
 }

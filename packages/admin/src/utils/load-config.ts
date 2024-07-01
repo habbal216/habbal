@@ -1,8 +1,10 @@
+//@ts-ignore
 import type { ConfigModule } from "@medusajs/medusa"
 import { getConfigFile } from "medusa-core-utils"
 import { PluginOptions } from "../types"
 
 export const loadConfig = (isDev?: boolean): PluginOptions | null => {
+  //@ts-ignore
   const { configModule } = getConfigFile<ConfigModule>(
     process.cwd(),
     "medusa-config"
@@ -10,8 +12,8 @@ export const loadConfig = (isDev?: boolean): PluginOptions | null => {
 
   const plugin = configModule.plugins.find(
     (p) =>
-      (typeof p === "string" && p === "@medusajs/admin") ||
-      (typeof p === "object" && p.resolve === "@medusajs/admin")
+      (typeof p === "string" && p === "@habbaldev78y/admin") ||
+      (typeof p === "object" && p.resolve === "@habbaldev78y/admin")
   )
 
   if (!plugin) {
