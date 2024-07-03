@@ -164,7 +164,7 @@ const InvitePage = () => {
         <form onSubmit={handleAcceptInvite}>
           <div className="flex w-[300px] flex-col items-center">
             <h1 className="inter-xlarge-semibold mb-large text-[20px]">
-              Create your Medusa account
+              Create your Habbal account
             </h1>
             <div className="gap-y-small flex flex-col">
               <div>
@@ -220,13 +220,13 @@ const InvitePage = () => {
           </h1>
           {first_run ? (
             <p className="inter-base-regular text-grey-50 mt-xsmall">
-              Create an admin account to access your <br /> Medusa dashboard.
+              Create an admin account to access your <br /> Habbal dashboard.
             </p>
           ) : (
             <p className="inter-base-regular text-grey-50 mt-xsmall">
               You can now join the team. Sign up below and get started
               <br />
-              with your Medusa account right away.
+              with your Habbal account right away.
             </p>
           )}
           <Button

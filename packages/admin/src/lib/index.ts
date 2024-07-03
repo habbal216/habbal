@@ -1,4 +1,4 @@
-import { withCustomWebpackConfig } from "@habbaldev78y/admin-ui"
+import { withCustomWebpackConfig } from "@medusajs/admin-ui"
 export { withCustomWebpackConfig }
 
 export * from "../types"

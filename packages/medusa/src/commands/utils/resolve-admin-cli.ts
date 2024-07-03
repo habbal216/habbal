@@ -6,7 +6,7 @@ export function resolveAdminCLI() {
 
   try {
     adminCLI = path.resolve(
-      require.resolve("@medusajs/admin"),
+      require.resolve("@habbaldev78y/admin"),
       "../../",
       "bin",
       "medusa-admin.js"

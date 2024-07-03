@@ -145,7 +145,7 @@ const VariantStockForm = ({ form }: Props) => {
             />
           </div>
           <p className="inter-base-regular text-grey-50">
-            When checked Medusa will regulate the inventory when orders and
+            When checked Habbal will regulate the inventory when orders and
             returns are made.
           </p>
         </div>

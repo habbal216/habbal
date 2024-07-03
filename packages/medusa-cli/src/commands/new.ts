@@ -13,6 +13,7 @@ import prompts from "prompts"
 import { Pool } from "pg"
 import url from "url"
 import { createDatabase } from "pg-god"
+//@ts-ignore
 import { track } from "medusa-telemetry"
 import inquirer from "inquirer"
 

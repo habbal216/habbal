@@ -15,7 +15,7 @@
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "allowJs": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "downlevelIteration": true, // to use ES5 specific tooling
     "resolveJsonModule": true
   },

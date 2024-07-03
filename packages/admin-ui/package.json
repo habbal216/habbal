@@ -1,7 +1,13 @@
 {
-  "name": "@habbaldev78y/admin-ui",
+  "name": "@medusajs/admin-ui",
+  "author": "",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "2.1.15",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medusajs/medusa.git",
+    "directory": "packages/admin-ui"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -134,6 +140,5 @@
   "bugs": {
     "url": "https://github.com/aftabhussain6/medusa/issues"
   },
-  "homepage": "https://github.com/aftabhussain6/medusa#readme",
-  "author": ""
+  "homepage": "https://github.com/aftabhussain6/medusa#readme"
 }

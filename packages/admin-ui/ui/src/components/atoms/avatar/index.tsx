@@ -28,7 +28,7 @@ const Avatar: React.FC<AvatarProps> = ({
   } else if (user?.email) {
     username = user.email
   } else {
-    username = "Medusa user"
+    username = "Habbal user"
   }
 
   return (

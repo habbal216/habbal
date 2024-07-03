@@ -6754,144 +6754,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@habbaldev78y/admin-ui@0.0.2, @habbaldev78y/admin-ui@workspace:packages/admin-ui":
-  version: 0.0.0-use.local
-  resolution: "@habbaldev78y/admin-ui@workspace:packages/admin-ui"
-  dependencies:
-    "@babel/parser": 7.22.5
-    "@babel/traverse": 7.22.5
-    "@babel/types": 7.22.5
-    "@hookform/error-message": ^2.0.1
-    "@hookform/resolvers": ^3.3.1
-    "@medusajs/icons": ^1.1.0
-    "@medusajs/medusa": ^1.20.6
-    "@medusajs/types": ^1.11.16
-    "@medusajs/ui": ^3.0.0
-    "@medusajs/ui-preset": ^1.1.3
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
-    "@radix-ui/react-accordion": ^1.0.1
-    "@radix-ui/react-avatar": ^1.0.1
-    "@radix-ui/react-collapsible": ^1.0.1
-    "@radix-ui/react-dialog": ^1.0.4
-    "@radix-ui/react-dropdown-menu": ^2.0.2
-    "@radix-ui/react-popover": ^1.0.3
-    "@radix-ui/react-portal": ^1.0.2
-    "@radix-ui/react-radio-group": ^1.1.1
-    "@radix-ui/react-select": ^2.0.0
-    "@radix-ui/react-switch": ^1.0.1
-    "@radix-ui/react-tooltip": ^1.0.3
-    "@segment/analytics-next": ^1.51.1
-    "@stdlib/number-float64-base-normalize": 0.0.8
-    "@svgr/webpack": ^8.0.1
-    "@swc/core": ^1.3.61
-    "@tailwindcss/forms": ^0.5.7
-    "@tanstack/react-query": 4.22.0
-    "@tanstack/react-table": ^8.7.9
-    "@types/pluralize": ^0.0.29
-    "@types/react": ^18.2.0
-    "@types/react-datepicker": ^4.10.0
-    "@types/react-dom": ^18.2.0
-    "@types/react-table": ^7.7.9
-    autoprefixer: ^10.4.19
-    chokidar: ^3.5.3
-    clsx: ^1.2.1
-    copy-to-clipboard: ^3.3.1
-    copy-webpack-plugin: ^11.0.0
-    css-loader: ^6.8.1
-    duplicate-dependencies-webpack-plugin: ^1.0.2
-    emoji-picker-react: ^4.4.3
-    framer-motion: ^9.1.6
-    html-webpack-plugin: ^5.5.1
-    i18next: ^22.5.0
-    i18next-browser-languagedetector: ^7.0.1
-    i18next-http-backend: ^2.2.1
-    i18next-parser: ^8.0.0
-    jest: 25.5.4
-    md5: ^2.3.0
-    medusa-react: ^9.0.17
-    mini-css-extract-plugin: ^2.7.6
-    moment: ^2.29.4
-    path-browserify: ^1.0.1
-    pluralize: ^8.0.0
-    postcss: ^8.4.38
-    postcss-loader: ^7.3.2
-    postcss-preset-env: ^8.4.1
-    prism-react-renderer: ^2.0.4
-    process: ^0.11.10
-    query-string: ^8.1.0
-    react: ^18.2.0
-    react-collapsible: ^2.8.3
-    react-country-flag: ^3.0.2
-    react-currency-input-field: ^3.6.8
-    react-datepicker: ^4.8.0
-    react-dev-utils: ^12.0.1
-    react-dnd: ^16.0.1
-    react-dnd-html5-backend: ^16.0.1
-    react-dom: ^18.2.0
-    react-helmet-async: ^1.3.0
-    react-highlight-words: ^0.18.0
-    react-hook-form: 7.38.0
-    react-hot-toast: 2.4.0
-    react-hotkeys-hook: ^3.4.7
-    react-i18next: ^12.3.1
-    react-json-tree: ^0.17.0
-    react-jwt: ^1.1.4
-    react-nestable: ^2.0.0
-    react-refresh: ^0.14.0
-    react-router-dom: 6.8.0
-    react-select: ^5.5.4
-    react-table: ^7.7.0
-    style-loader: ^3.3.3
-    swc-loader: ^0.2.3
-    swc-minify-webpack-plugin: ^2.1.1
-    tailwindcss: ^3.4.3
-    tailwindcss-radix: ^2.7.0
-    ts-dedent: ^2.2.0
-    ts-jest: 25.5.1
-    ts-node: ^10.9.1
-    tsup: 6.7.0
-    type-fest: ^3.6.0
-    typescript: ^4.9.3
-    webpack: ^5.84.1
-    webpack-bundle-analyzer: ^4.9.0
-    webpack-cli: ^5.1.1
-    webpack-dev-server: 4.15.0
-    webpackbar: ^5.0.2
-    zod: ^3.22.2
-  languageName: unknown
-  linkType: soft
-
-"@habbaldev78y/admin@workspace:packages/admin":
-  version: 0.0.0-use.local
-  resolution: "@habbaldev78y/admin@workspace:packages/admin"
-  dependencies:
-    "@habbaldev78y/admin-ui": 0.0.2
-    "@medusajs/medusa": ^1.20.6
-    "@rollup/plugin-alias": 5.0.0
-    "@rollup/plugin-commonjs": 24.1.0
-    "@rollup/plugin-json": 6.0.0
-    "@rollup/plugin-node-resolve": 15.0.2
-    "@rollup/plugin-replace": 5.0.2
-    "@rollup/plugin-virtual": ^3.0.1
-    "@types/express": ^4.17.13
-    commander: ^10.0.0
-    dotenv: ^16.4.5
-    esbuild: 0.17.18
-    express: 4.18.2
-    fs-extra: 11.1.0
-    lodash: ^4.17.21
-    medusa-core-utils: 1.1.30
-    rollup: 3.20.7
-    rollup-plugin-esbuild: 5.0.0
-    ts-dedent: ^2.2.0
-    typescript: ^4.9.3
-  peerDependencies:
-    "@medusajs/medusa": ^1.14.0
-  bin:
-    medusa-admin: ./bin/medusa-admin.js
-  languageName: unknown
-  linkType: soft
-
 "@hapi/boom@npm:^10.0.1":
   version: 10.0.1
   resolution: "@hapi/boom@npm:10.0.1"
@@ -8562,125 +8424,143 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@medusajs/admin-ui@npm:^2.1.15":
-  version: 2.1.15
-  resolution: "@medusajs/admin-ui@npm:2.1.15"
+"@medusajs/admin-ui@^2.1.15, @medusajs/admin-ui@workspace:packages/admin-ui":
+  version: 0.0.0-use.local
+  resolution: "@medusajs/admin-ui@workspace:packages/admin-ui"
   dependencies:
-    "@babel/parser": "npm:7.22.5"
-    "@babel/traverse": "npm:7.22.5"
-    "@hookform/error-message": "npm:^2.0.1"
-    "@hookform/resolvers": "npm:^3.3.1"
-    "@medusajs/icons": "npm:^1.1.0"
-    "@medusajs/ui": "npm:^3.0.0"
-    "@medusajs/ui-preset": "npm:^1.1.3"
-    "@pmmmwh/react-refresh-webpack-plugin": "npm:^0.5.10"
-    "@radix-ui/react-accordion": "npm:^1.0.1"
-    "@radix-ui/react-avatar": "npm:^1.0.1"
-    "@radix-ui/react-collapsible": "npm:^1.0.1"
-    "@radix-ui/react-dialog": "npm:^1.0.4"
-    "@radix-ui/react-dropdown-menu": "npm:^2.0.2"
-    "@radix-ui/react-popover": "npm:^1.0.3"
-    "@radix-ui/react-portal": "npm:^1.0.2"
-    "@radix-ui/react-radio-group": "npm:^1.1.1"
-    "@radix-ui/react-select": "npm:^2.0.0"
-    "@radix-ui/react-switch": "npm:^1.0.1"
-    "@radix-ui/react-tooltip": "npm:^1.0.3"
-    "@segment/analytics-next": "npm:^1.51.1"
-    "@stdlib/number-float64-base-normalize": "npm:0.0.8"
-    "@svgr/webpack": "npm:^8.0.1"
-    "@swc/core": "npm:^1.3.61"
-    "@tailwindcss/forms": "npm:^0.5.7"
-    "@tanstack/react-query": "npm:4.22.0"
-    "@tanstack/react-table": "npm:^8.7.9"
-    autoprefixer: "npm:^10.4.19"
-    chokidar: "npm:^3.5.3"
-    clsx: "npm:^1.2.1"
-    copy-to-clipboard: "npm:^3.3.1"
-    copy-webpack-plugin: "npm:^11.0.0"
-    css-loader: "npm:^6.8.1"
-    emoji-picker-react: "npm:^4.4.3"
-    framer-motion: "npm:^9.1.6"
-    html-webpack-plugin: "npm:^5.5.1"
-    i18next: "npm:^22.5.0"
-    i18next-browser-languagedetector: "npm:^7.0.1"
-    i18next-http-backend: "npm:^2.2.1"
-    md5: "npm:^2.3.0"
-    medusa-react: "npm:^9.0.17"
-    mini-css-extract-plugin: "npm:^2.7.6"
-    moment: "npm:^2.29.4"
-    path-browserify: "npm:^1.0.1"
-    pluralize: "npm:^8.0.0"
-    postcss: "npm:^8.4.38"
-    postcss-loader: "npm:^7.3.2"
-    postcss-preset-env: "npm:^8.4.1"
-    prism-react-renderer: "npm:^2.0.4"
-    process: "npm:^0.11.10"
-    query-string: "npm:^8.1.0"
-    react: "npm:^18.2.0"
-    react-collapsible: "npm:^2.8.3"
-    react-country-flag: "npm:^3.0.2"
-    react-currency-input-field: "npm:^3.6.8"
-    react-datepicker: "npm:^4.8.0"
-    react-dev-utils: "npm:^12.0.1"
-    react-dnd: "npm:^16.0.1"
-    react-dnd-html5-backend: "npm:^16.0.1"
-    react-dom: "npm:^18.2.0"
-    react-helmet-async: "npm:^1.3.0"
-    react-highlight-words: "npm:^0.18.0"
-    react-hook-form: "npm:7.38.0"
-    react-hot-toast: "npm:2.4.0"
-    react-hotkeys-hook: "npm:^3.4.7"
-    react-i18next: "npm:^12.3.1"
-    react-json-tree: "npm:^0.17.0"
-    react-jwt: "npm:^1.1.4"
-    react-nestable: "npm:^2.0.0"
-    react-refresh: "npm:^0.14.0"
-    react-router-dom: "npm:6.8.0"
-    react-select: "npm:^5.5.4"
-    react-table: "npm:^7.7.0"
-    style-loader: "npm:^3.3.3"
-    swc-loader: "npm:^0.2.3"
-    swc-minify-webpack-plugin: "npm:^2.1.1"
-    tailwindcss: "npm:^3.4.3"
-    tailwindcss-radix: "npm:^2.7.0"
-    ts-dedent: "npm:^2.2.0"
-    type-fest: "npm:^3.6.0"
-    webpack: "npm:^5.84.1"
-    webpack-dev-server: "npm:4.15.0"
-    webpackbar: "npm:^5.0.2"
-    zod: "npm:^3.22.2"
-  checksum: ea0f152993d18edf2fce43e56ff0e8cbec885e124f5c958a41c8dbf78eac6e7aae50c9edfab701e6329a1cf5940cb0e7ebde138b47918b7d31e7568a9ce02b60
-  languageName: node
-  linkType: hard
+    "@babel/parser": 7.22.5
+    "@babel/traverse": 7.22.5
+    "@babel/types": 7.22.5
+    "@hookform/error-message": ^2.0.1
+    "@hookform/resolvers": ^3.3.1
+    "@medusajs/icons": ^1.1.0
+    "@medusajs/medusa": ^1.20.6
+    "@medusajs/types": ^1.11.16
+    "@medusajs/ui": ^3.0.0
+    "@medusajs/ui-preset": ^1.1.3
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
+    "@radix-ui/react-accordion": ^1.0.1
+    "@radix-ui/react-avatar": ^1.0.1
+    "@radix-ui/react-collapsible": ^1.0.1
+    "@radix-ui/react-dialog": ^1.0.4
+    "@radix-ui/react-dropdown-menu": ^2.0.2
+    "@radix-ui/react-popover": ^1.0.3
+    "@radix-ui/react-portal": ^1.0.2
+    "@radix-ui/react-radio-group": ^1.1.1
+    "@radix-ui/react-select": ^2.0.0
+    "@radix-ui/react-switch": ^1.0.1
+    "@radix-ui/react-tooltip": ^1.0.3
+    "@segment/analytics-next": ^1.51.1
+    "@stdlib/number-float64-base-normalize": 0.0.8
+    "@svgr/webpack": ^8.0.1
+    "@swc/core": ^1.3.61
+    "@tailwindcss/forms": ^0.5.7
+    "@tanstack/react-query": 4.22.0
+    "@tanstack/react-table": ^8.7.9
+    "@types/pluralize": ^0.0.29
+    "@types/react": ^18.2.0
+    "@types/react-datepicker": ^4.10.0
+    "@types/react-dom": ^18.2.0
+    "@types/react-table": ^7.7.9
+    autoprefixer: ^10.4.19
+    chokidar: ^3.5.3
+    clsx: ^1.2.1
+    copy-to-clipboard: ^3.3.1
+    copy-webpack-plugin: ^11.0.0
+    css-loader: ^6.8.1
+    duplicate-dependencies-webpack-plugin: ^1.0.2
+    emoji-picker-react: ^4.4.3
+    framer-motion: ^9.1.6
+    html-webpack-plugin: ^5.5.1
+    i18next: ^22.5.0
+    i18next-browser-languagedetector: ^7.0.1
+    i18next-http-backend: ^2.2.1
+    i18next-parser: ^8.0.0
+    jest: 25.5.4
+    md5: ^2.3.0
+    medusa-react: ^9.0.17
+    mini-css-extract-plugin: ^2.7.6
+    moment: ^2.29.4
+    path-browserify: ^1.0.1
+    pluralize: ^8.0.0
+    postcss: ^8.4.38
+    postcss-loader: ^7.3.2
+    postcss-preset-env: ^8.4.1
+    prism-react-renderer: ^2.0.4
+    process: ^0.11.10
+    query-string: ^8.1.0
+    react: ^18.2.0
+    react-collapsible: ^2.8.3
+    react-country-flag: ^3.0.2
+    react-currency-input-field: ^3.6.8
+    react-datepicker: ^4.8.0
+    react-dev-utils: ^12.0.1
+    react-dnd: ^16.0.1
+    react-dnd-html5-backend: ^16.0.1
+    react-dom: ^18.2.0
+    react-helmet-async: ^1.3.0
+    react-highlight-words: ^0.18.0
+    react-hook-form: 7.38.0
+    react-hot-toast: 2.4.0
+    react-hotkeys-hook: ^3.4.7
+    react-i18next: ^12.3.1
+    react-json-tree: ^0.17.0
+    react-jwt: ^1.1.4
+    react-nestable: ^2.0.0
+    react-refresh: ^0.14.0
+    react-router-dom: 6.8.0
+    react-select: ^5.5.4
+    react-table: ^7.7.0
+    style-loader: ^3.3.3
+    swc-loader: ^0.2.3
+    swc-minify-webpack-plugin: ^2.1.1
+    tailwindcss: ^3.4.3
+    tailwindcss-radix: ^2.7.0
+    ts-dedent: ^2.2.0
+    ts-jest: 25.5.1
+    ts-node: ^10.9.1
+    tsup: 6.7.0
+    type-fest: ^3.6.0
+    typescript: ^4.9.3
+    webpack: ^5.84.1
+    webpack-bundle-analyzer: ^4.9.0
+    webpack-cli: ^5.1.1
+    webpack-dev-server: 4.15.0
+    webpackbar: ^5.0.2
+    zod: ^3.22.2
+  languageName: unknown
+  linkType: soft
 
-"@medusajs/admin@npm:^7.1.12":
-  version: 7.1.14
-  resolution: "@medusajs/admin@npm:7.1.14"
+"@medusajs/admin@^7.1.12, @medusajs/admin@workspace:packages/admin":
+  version: 0.0.0-use.local
+  resolution: "@medusajs/admin@workspace:packages/admin"
   dependencies:
     "@medusajs/admin-ui": ^2.1.15
+    "@medusajs/medusa": ^1.20.6
     "@rollup/plugin-alias": 5.0.0
     "@rollup/plugin-commonjs": 24.1.0
     "@rollup/plugin-json": 6.0.0
     "@rollup/plugin-node-resolve": 15.0.2
     "@rollup/plugin-replace": 5.0.2
     "@rollup/plugin-virtual": ^3.0.1
+    "@types/express": ^4.17.13
     commander: ^10.0.0
     dotenv: ^16.4.5
     esbuild: 0.17.18
     express: 4.18.2
     fs-extra: 11.1.0
     lodash: ^4.17.21
-    medusa-core-utils: 1.2.2
+    medusa-core-utils: 1.1.30
     rollup: 3.20.7
     rollup-plugin-esbuild: 5.0.0
     ts-dedent: ^2.2.0
+    typescript: ^4.9.3
   peerDependencies:
     "@medusajs/medusa": ^1.14.0
   bin:
-    medusa-admin: bin/medusa-admin.js
-  checksum: d7883dd9469fd4e0ea9875530822931de19075a6b3f09cd184de474ffb5ab84f6738665e03200917fdc84aa07deba7b5fa49fd85a0425eb197e056c241e23bb7
-  languageName: node
-  linkType: hard
+    medusa-admin: ./bin/medusa-admin.js
+  languageName: unknown
+  linkType: soft
 
 "@medusajs/api-key@workspace:^, @medusajs/api-key@workspace:packages/api-key":
   version: 0.0.0-use.local
@@ -9081,7 +8961,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@medusajs/icons@^1.1.0, @medusajs/icons@^1.2.1, @medusajs/icons@npm:^1.1.0, @medusajs/icons@workspace:^, @medusajs/icons@workspace:packages/design-system/icons":
+"@medusajs/icons@^1.1.0, @medusajs/icons@^1.2.1, @medusajs/icons@workspace:^, @medusajs/icons@workspace:packages/design-system/icons":
   version: 0.0.0-use.local
   resolution: "@medusajs/icons@workspace:packages/design-system/icons"
   dependencies:
@@ -9786,7 +9666,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@medusajs/ui-preset@^1.1.3, @medusajs/ui-preset@npm:^1.1.3, @medusajs/ui-preset@workspace:^, @medusajs/ui-preset@workspace:packages/design-system/ui-preset":
+"@medusajs/ui-preset@^1.1.3, @medusajs/ui-preset@workspace:^, @medusajs/ui-preset@workspace:packages/design-system/ui-preset":
   version: 0.0.0-use.local
   resolution: "@medusajs/ui-preset@workspace:packages/design-system/ui-preset"
   dependencies:
@@ -9801,7 +9681,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@medusajs/ui@^3.0.0, @medusajs/ui@npm:^3.0.0, @medusajs/ui@workspace:^, @medusajs/ui@workspace:packages/design-system/ui":
+"@medusajs/ui@^3.0.0, @medusajs/ui@workspace:^, @medusajs/ui@workspace:packages/design-system/ui":
   version: 0.0.0-use.local
   resolution: "@medusajs/ui@workspace:packages/design-system/ui"
   dependencies:
@@ -39229,7 +39109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"medusa-core-utils@1.2.2, medusa-core-utils@^1.2.0, medusa-core-utils@^1.2.1, medusa-core-utils@^1.2.2, medusa-core-utils@workspace:packages/medusa-core-utils":
+"medusa-core-utils@^1.2.0, medusa-core-utils@^1.2.1, medusa-core-utils@^1.2.2, medusa-core-utils@workspace:packages/medusa-core-utils":
   version: 0.0.0-use.local
   resolution: "medusa-core-utils@workspace:packages/medusa-core-utils"
   dependencies:
@@ -39924,7 +39804,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"medusa-react@^9.0.16, medusa-react@^9.0.17, medusa-react@npm:^9.0.17, medusa-react@workspace:^, medusa-react@workspace:packages/medusa-react":
+"medusa-react@^9.0.16, medusa-react@^9.0.17, medusa-react@workspace:^, medusa-react@workspace:packages/medusa-react":
   version: 0.0.0-use.local
   resolution: "medusa-react@workspace:packages/medusa-react"
   dependencies:

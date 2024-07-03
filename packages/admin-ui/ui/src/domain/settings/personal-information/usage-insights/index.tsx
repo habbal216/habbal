@@ -36,10 +36,9 @@ const UsageInsights = ({ user }: Props) => {
             )}
           </div>
           <p className="inter-base-regular text-grey-50">
-            {t(
-              "usage-insights-share-usage-insights-and-help-us-improve-medusa",
-              "Share usage insights and help us improve Medusa"
-            )}
+            {
+              "Share usage insights and help us improve Habbal"
+            }
           </p>
         </div>
         <Button

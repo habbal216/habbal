@@ -1,3 +1,4 @@
+//@ts-ignore
 import { getMedusaVersion } from "medusa-core-utils"
 
 export const getLocalMedusaVersion = (): string => {

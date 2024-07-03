@@ -44,7 +44,7 @@ const DashboardRoutes = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout>
-        <SEO title="Medusa" />
+        <SEO title="Habbal" />
         <Routes>
           <Route path="oauth/:app_name" element={<Oauth />} />
           <Route path="products/*" element={<ProductsRoute />} />

@@ -1,7 +1,7 @@
 import colors from "picocolors"
 import readline from "readline"
 
-const prefix = "[@medusajs/admin]"
+const prefix = "[@habbaldev78y/admin]"
 
 type LogType = "error" | "warn" | "info"
 

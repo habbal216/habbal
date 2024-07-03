@@ -121,7 +121,7 @@ const AccountDetails = () => {
               <Input
                 label={t("settings-store-name", "Store name")}
                 {...register("name")}
-                placeholder={t("settings-medusa-store", "Medusa Store")}
+                placeholder={"Medusa Store"}
               />
             </div>
             <div>

@@ -29,7 +29,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
       <div className="gap-x-large mb-small grid grid-cols-2">
         <InputField
           label="Title"
-          placeholder={isGiftCard ? "Gift Card" : "Winter Jacket"}
+          placeholder={isGiftCard ? "Gift Card" : "Wedding Ring"}
           required
           {...register(path("title"), {
             required: "Title is required",
@@ -43,7 +43,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
         />
         <InputField
           label="Subtitle"
-          placeholder="Warm and cozy..."
+          placeholder="Classic and elegant..."
           {...register(path("subtitle"), {
             pattern: FormValidator.whiteSpaceRule("Subtitle"),
           })}
@@ -66,7 +66,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
                 }. If not specified, it will be generated from the title.`
               : undefined
           }
-          placeholder={isGiftCard ? "gift-card" : "winter-jacket"}
+          placeholder={isGiftCard ? "gift-card" : "wedding-ring"}
           required={requireHandle}
           {...register(path("handle"), {
             required: requireHandle ? "Handle is required" : undefined,
@@ -78,7 +78,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
         />
         <InputField
           label="Material"
-          placeholder={isGiftCard ? "Paper" : "100% Cotton"}
+          placeholder={isGiftCard ? "Paper" : "100% Gold"}
           {...register(path("material"), {
             minLength: FormValidator.minOneCharRule("Material"),
             pattern: FormValidator.whiteSpaceRule("Material"),
@@ -89,7 +89,7 @@ const GeneralForm = ({ form, requireHandle = true, isGiftCard }: Props) => {
       <TextArea
         label="Description"
         placeholder={
-          isGiftCard ? "The gift card is..." : "A warm and cozy jacket..."
+          isGiftCard ? "The gift card is..." : "A classic and elegant ring..."
         }
         rows={3}
         className="mb-small"

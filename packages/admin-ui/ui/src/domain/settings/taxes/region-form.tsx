@@ -138,10 +138,9 @@ export const RegionTaxForm = ({ region }: RegionTaxFormProps) => {
             )}
           />
           <IconTooltip
-            content={t(
-              "taxes-automatically-apply-tax-calculations-to-carts",
-              "When checked Medusa will automatically apply tax calculations to Carts in this Region. When unchecked you will have to manually compute taxes at checkout. Manual taxes are recommended if using a 3rd party tax provider to avoid performing too many requests"
-            )}
+            content={
+              "When checked Habbal will automatically apply tax calculations to Carts in this Region. When unchecked you will have to manually compute taxes at checkout. Manual taxes are recommended if using a 3rd party tax provider to avoid performing too many requests"
+            }
           />
         </div>
         <div className="item-center flex gap-x-1.5">

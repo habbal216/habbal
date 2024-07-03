@@ -27,24 +27,23 @@ const PersonalInformation = () => {
             )}
           </h1>
           <p className="inter-base-regular text-grey-50">
-            {t(
-              "personal-information-manage-your-medusa-profile",
-              "Manage your Medusa profile"
-            )}
+            {
+              "Manage your Habbal profile"
+            }
           </p>
         </div>
         <div className="flex flex-col">
           <div className="border-grey-20 py-xlarge border-t">
             <EditUserInformation user={user} />
           </div>
-          <div className="border-grey-20 py-xlarge border-t">
+          {/* <div className="border-grey-20 py-xlarge border-t">
             <LanguageSettings />
-          </div>
-          {isFeatureEnabled("analytics") && (
+          </div> */}
+          {/* {isFeatureEnabled("analytics") && (
             <div className="border-grey-20 py-xlarge border-t">
               <UsageInsights user={user} />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

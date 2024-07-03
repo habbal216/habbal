@@ -1,6 +1,6 @@
 {
-  "name": "@habbaldev78y/admin",
-  "version": "1.0.2",
+  "name": "@medusajs/admin",
+  "version": "7.1.14",
   "bin": {
     "medusa-admin": "./bin/medusa-admin.js"
   },
@@ -23,11 +23,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/medusajs/medusa.git",
+    "url": "https://github.com/aftabhussain6/medusa",
     "directory": "packages/admin"
   },
   "dependencies": {
-    "@habbaldev78y/admin-ui": "0.0.2",
+    "@medusajs/admin-ui": "^2.1.15",
     "@rollup/plugin-alias": "5.0.0",
     "@rollup/plugin-commonjs": "24.1.0",
     "@rollup/plugin-json": "6.0.0",

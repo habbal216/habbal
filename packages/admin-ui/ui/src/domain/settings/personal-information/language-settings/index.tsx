@@ -14,10 +14,9 @@ const LanguageSettings = () => {
             </h2>
           </div>
           <p className="inter-base-regular text-grey-50">
-            {t(
-              "personal-information-language-settings-description",
-              "Adjust the language of Medusa Admin"
-            )}
+            {
+              "Language of Habbal Admin"
+            }
           </p>
         </div>
         <LanguageMenu />

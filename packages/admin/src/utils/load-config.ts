@@ -12,8 +12,8 @@ export const loadConfig = (isDev?: boolean): PluginOptions | null => {
 
   const plugin = configModule.plugins.find(
     (p) =>
-      (typeof p === "string" && p === "@habbaldev78y/admin") ||
-      (typeof p === "object" && p.resolve === "@habbaldev78y/admin")
+      (typeof p === "string" && p === "@medusajs/admin") ||
+      (typeof p === "object" && p.resolve === "@medusajs/admin")
   )
 
   if (!plugin) {

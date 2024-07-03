@@ -1,4 +1,4 @@
-import { logger } from "@habbaldev78y/admin-ui"
+import { logger } from "@medusajs/admin-ui"
 //@ts-ignore
 import type { ConfigModule } from "@medusajs/medusa"
 import { getConfigFile } from "medusa-core-utils"

@@ -16,11 +16,11 @@ const MailDialog = ({ open, onClose }: MailDialogProps) => {
   const { t } = useTranslation()
   const [subject, setSubject] = useState("")
   const [body, setBody] = useState("")
-  const [link, setLink] = useState("mailto:support@medusajs.com")
+  const [link, setLink] = useState("mailto:support@habbal.com")
 
   React.useEffect(() => {
     setLink(
-      `mailto:support@medusajs.com?subject=${encodeURI(
+      `mailto:support@habbal.com?subject=${encodeURI(
         subject
       )}&body=${encodeURI(body)}`
     )

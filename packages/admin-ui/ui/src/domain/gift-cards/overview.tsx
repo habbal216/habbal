@@ -117,10 +117,7 @@ const Overview = () => {
       <div className="flex flex-col">
         <PageDescription
           title={t("gift-cards-gift-cards", "Gift Cards")}
-          subtitle={t(
-            "gift-cards-manage",
-            "Manage the Gift Cards of your Medusa store"
-          )}
+          subtitle={"Manage the Gift Cards of your Habbal store"}
         />
         {!isLoading ? (
           <div className="gap-y-xsmall flex flex-col">

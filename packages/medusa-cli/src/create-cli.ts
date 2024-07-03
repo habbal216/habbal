@@ -1,4 +1,5 @@
 import { sync as existsSync } from "fs-exists-cached"
+//@ts-ignore
 import { setTelemetryEnabled } from "medusa-telemetry"
 import path from "path"
 import resolveCwd from "resolve-cwd"
