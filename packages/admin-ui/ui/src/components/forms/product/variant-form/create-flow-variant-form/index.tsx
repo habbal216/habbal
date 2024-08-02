@@ -14,6 +14,7 @@ import IconTooltip from "../../../../molecules/icon-tooltip"
 import InputError from "../../../../atoms/input-error"
 import { UseFormReturn } from "react-hook-form"
 import { nestedForm } from "../../../../../utils/nested-form"
+import PriceCalculator, { JewelryFormType } from "../../../../../domain/products/new/add-variants/price-calculator"
 
 export type CreateFlowVariantFormType = {
   /**
@@ -24,6 +25,7 @@ export type CreateFlowVariantFormType = {
   stock: VariantStockFormType
   options: VariantSelectOptionsFormType
   customs: CustomsFormType
+  calculator: JewelryFormType
   dimensions: DimensionsFormType
 }
 
@@ -77,6 +79,9 @@ const CreateFlowVariantForm = ({ form, options, onCreateOption }: Props) => {
       </Accordion.Item>
       <Accordion.Item title="Stock & Inventory" value="stock">
         <VariantStockForm form={nestedForm(form, "stock")} />
+      </Accordion.Item>
+      <Accordion.Item title="Pricing Calculator" value="calculator" >
+        <PriceCalculator form={nestedForm(form, "calculator")} />
       </Accordion.Item>
       <Accordion.Item title="Shipping" value="shipping">
         <p className="inter-base-regular text-grey-50">

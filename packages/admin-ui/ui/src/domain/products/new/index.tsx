@@ -1,5 +1,5 @@
-import { AdminPostProductsReq, ProductVariant } from "@medusajs/medusa"
-import { useAdminCreateProduct, useMedusa } from "medusa-react"
+import { AdminPostProductsReq, ProductVariant, PriceListStatus, PriceListType } from "@medusajs/medusa"
+import { useAdminCreateProduct, useMedusa,useAdminCreatePriceList } from "medusa-react"
 import { useForm, useWatch } from "react-hook-form"
 import CustomsForm, {
   CustomsFormType,
@@ -57,6 +57,19 @@ type NewProductForm = {
 
 type Props = {
   onClose: () => void
+}
+
+type CreateData = {
+  name: string
+  description: string
+  type: PriceListType
+  status: PriceListStatus
+  prices: {
+    amount: number
+    variant_id: string
+    currency_code: string
+    max_quantity: number
+  }[]
 }
 
 const NewProduct = ({ onClose }: Props) => {
@@ -193,6 +206,18 @@ const NewProduct = ({ onClose }: Props) => {
 
   const { client } = useMedusa()
 
+  const createPriceList = useAdminCreatePriceList()
+
+  const handleCreate = (
+    data: CreateData
+  ) => {
+    createPriceList.mutate(data, {
+      onSuccess: ({ price_list }) => {
+        console.log(price_list.id)
+      }
+    })
+  }
+
   const createStockLocationsForVariants = async (
     variants: ProductVariant[],
     stockLocationsMap: Map<
@@ -200,6 +225,7 @@ const NewProduct = ({ onClose }: Props) => {
       { stocked_quantity: number; location_id: string }[] | undefined
     >
   ) => {
+    console.log(JSON.stringify(variants))
     await Promise.all(
       variants
         .map(async (variant) => {
@@ -388,6 +414,7 @@ const createPayload = (
   publish = true,
   salesChannelsEnabled = false
 ): AdminPostProductsReq => {
+  // console.log(data)
   const payload: AdminPostProductsReq = {
     title: data.general.title,
     subtitle: data.general.subtitle || undefined,
@@ -442,6 +469,7 @@ const createPayload = (
       mid_code: v.customs.mid_code || undefined,
       origin_country: v.customs.origin_country?.value || undefined,
       manage_inventory: v.stock.manage_inventory,
+      metadata: v.calculator || {}
     })),
     // @ts-ignore
     status: publish ? ProductStatus.PUBLISHED : ProductStatus.DRAFT,
