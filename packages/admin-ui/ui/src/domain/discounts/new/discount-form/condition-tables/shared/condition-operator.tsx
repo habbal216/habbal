@@ -28,7 +28,7 @@ const ConditionOperator: React.FC<ConditionOperatorProps> = ({
           "Applies to the selected items."
         )}
       />
-      <RadioGroup.Item
+      {/* <RadioGroup.Item
         className="w-full"
         label="Not in"
         value={DiscountConditionOperator.NOT_IN}
@@ -36,7 +36,7 @@ const ConditionOperator: React.FC<ConditionOperatorProps> = ({
           "shared-applies-to-all-items-except-the-selected-items",
           "Applies to all items except the selected items."
         )}
-      />
+      /> */}
     </RadioGroup.Root>
   )
 }

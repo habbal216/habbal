@@ -1,4 +1,6 @@
+//@ts-ignore
 import { AdminPostProductsReq, ProductVariant, PriceListStatus, PriceListType } from "@medusajs/medusa"
+//@ts-ignore
 import { useAdminCreateProduct, useMedusa,useAdminCreatePriceList } from "medusa-react"
 import { useForm, useWatch } from "react-hook-form"
 import CustomsForm, {
@@ -31,6 +33,7 @@ import AddVariantsForm, { AddVariantsFormType } from "./add-variants"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
+//@ts-ignore
 import { PricesFormType } from "../../../components/forms/general/prices-form"
 import Button from "../../../components/fundamentals/button"
 import FeatureToggle from "../../../components/fundamentals/feature-toggle"
@@ -42,6 +45,7 @@ import { useFeatureFlag } from "../../../providers/feature-flag-provider"
 import { getErrorMessage } from "../../../utils/error-messages"
 import { prepareImages } from "../../../utils/images"
 import { nestedForm } from "../../../utils/nested-form"
+import axios from "axios"
 
 type NewProductForm = {
   general: GeneralFormType
@@ -90,6 +94,55 @@ const NewProduct = ({ onClose }: Props) => {
     control: form.control,
     name: "dimensions",
   })
+
+
+async function calculateTotalPrice(variants:any[]) {
+
+  const response = await axios.get('http://localhost:9000/store/custom/getJeweleryData');
+  const prices = response.data;
+
+  const result = variants.map((variant:any) => {
+    let totalCost = 0;
+
+    // Calculate gold cost
+    variant.metadata.gold.forEach((goldItem:any) => {
+      const goldType = goldItem.carat;
+      const goldWeight = parseFloat(goldItem.gram);
+      const goldPriceData = prices.find((price:any) => price.type === goldType && price.jewelery_type === 'gold');
+      if (goldPriceData) {
+        totalCost += goldWeight * goldPriceData.price;
+      }
+    });
+
+    // Calculate diamond cost
+    variant.metadata.diamonds.forEach((diamondItem:any) => {
+      const diamondType = diamondItem.carat;
+      const diamondQuantity = parseInt(diamondItem.quantity);
+      const diamondPriceData = prices.find((price:any) => price.type === diamondType && price.jewelery_type === 'diamond');
+      if (diamondPriceData) {
+        totalCost += diamondQuantity * diamondPriceData.price;
+      }
+    });
+
+    // Add labor cost
+    const laborCost = parseFloat(variant.metadata.laborCost);
+    totalCost += laborCost;
+
+    // Apply profit margin
+    const profitMargin = parseFloat(variant.metadata.profitMargin) / 100;
+    totalCost += totalCost * profitMargin;
+
+    return {
+      amount: totalCost,
+      variant_id: variant.id,
+      currency_code: 'usd',
+      max_quantity: 1,
+    };
+  });
+
+  return result;
+}
+
 
   const {
     handleSubmit,
@@ -189,7 +242,7 @@ const NewProduct = ({ onClose }: Props) => {
       }
 
       mutate(payload, {
-        onSuccess: ({ product }) => {
+        onSuccess: ({ product }:any) => {
           createStockLocationsForVariants(
             product.variants,
             optionsToStockLocationsMap
@@ -198,7 +251,7 @@ const NewProduct = ({ onClose }: Props) => {
             navigate(`/a/products/${product.id}`)
           })
         },
-        onError: (err) => {
+        onError: (err:any) => {
           notification(t("new-error", "Error"), getErrorMessage(err), "error")
         },
       })
@@ -212,7 +265,7 @@ const NewProduct = ({ onClose }: Props) => {
     data: CreateData
   ) => {
     createPriceList.mutate(data, {
-      onSuccess: ({ price_list }) => {
+      onSuccess: ({ price_list }:any) => {
         console.log(price_list.id)
       }
     })
@@ -226,38 +279,49 @@ const NewProduct = ({ onClose }: Props) => {
     >
   ) => {
     console.log(JSON.stringify(variants))
-    await Promise.all(
-      variants
-        .map(async (variant) => {
-          const optionsKey = variant.options
-            .map((option) => option?.value || "")
-            .sort()
-            .join(",")
-
-          const stock_locations = stockLocationsMap.get(optionsKey)
-          if (!stock_locations?.length) {
-            return
-          }
-
-          const inventory = await client.admin.variants.getInventory(variant.id)
-
-          return await Promise.all(
-            inventory.variant.inventory
-              .map(async (item) => {
-                return Promise.all(
-                  stock_locations.map(async (stock_location) => {
-                    client.admin.inventoryItems.createLocationLevel(item.id!, {
-                      location_id: stock_location.location_id,
-                      stocked_quantity: stock_location.stocked_quantity,
+    calculateTotalPrice(variants).then(async (result) => {
+      handleCreate({
+        name: 'Pricing',
+        description: 'For products',
+        type: 'override',
+        status: 'active',
+        prices: result
+      })
+      await Promise.all(
+        variants
+          .map(async (variant) => {
+            const optionsKey = variant.options
+              .map((option:any) => option?.value || "")
+              .sort()
+              .join(",")
+  
+            const stock_locations = stockLocationsMap.get(optionsKey)
+            if (!stock_locations?.length) {
+              return
+            }
+  
+            const inventory = await client.admin.variants.getInventory(variant.id)
+  
+            return await Promise.all(
+              inventory.variant.inventory
+                .map(async (item:any) => {
+                  return Promise.all(
+                    stock_locations.map(async (stock_location) => {
+                      client.admin.inventoryItems.createLocationLevel(item.id!, {
+                        location_id: stock_location.location_id,
+                        stocked_quantity: stock_location.stocked_quantity,
+                      })
                     })
-                  })
-                )
-              })
-              .flat()
-          )
-        })
-        .flat()
-    )
+                  )
+                })
+                .flat()
+            )
+          })
+          .flat()
+      )
+      }).catch(error => {
+        console.error(error);
+      });
   }
 
   return (
