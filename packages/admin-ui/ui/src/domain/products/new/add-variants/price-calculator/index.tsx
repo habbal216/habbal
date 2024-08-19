@@ -4,6 +4,7 @@ import PlusIcon from "../../../../../components/fundamentals/icons/plus-icon"
 import TrashIcon from "../../../../../components/fundamentals/icons/trash-icon"
 import InputField from "../../../../../components/molecules/input"
 import { NestedForm } from "../../../../../utils/nested-form"
+import Select from "../../../../../components/molecules/select/next-select/select"
 
 type DiamondType = {
   carat: string
@@ -78,9 +79,19 @@ const PriceCalculator = ({ form }: Props) => {
                 control={control}
                 name={path(`gold.${index}.carat`)}
                 render={({ field }) => (
-                  <InputField
-                    placeholder={"Carat"}
+                  // <InputField
+                  //   placeholder={"Carat"}
+                  //   {...field}
+                  // />
+                  <Select<any>
                     {...field}
+                    options={[
+                      { value: "24k", label: "24k" },
+                      { value: "22k", label: "22k" },
+                      { value: "20k", label: "20k" }
+                    ]}
+                    placeholder={"Select Carat"}
+                    isClearable
                   />
                 )}
               />
@@ -127,10 +138,20 @@ const PriceCalculator = ({ form }: Props) => {
                 control={control}
                 name={path(`diamonds.${index}.carat`)}
                 render={({ field }) => (
-                  <InputField
-                    placeholder={"Carat"}
-                    {...field}
-                  />
+                  // <InputField
+                  //   placeholder={"Carat"}
+                  //   {...field}
+                  // />
+                  <Select<any>
+                  {...field}
+                  options={[
+                    { value: "1ct", label: "1ct" },
+                    { value: "0.5ct", label: "0.5ct" },
+                    { value: "0.02ct", label: "0.02ct" }
+                  ]}
+                  placeholder={"Select Carat"}
+                  isClearable
+                />
                 )}
               />
               <Controller

@@ -108,7 +108,8 @@ async function calculateTotalPrice(variants:any[]) {
     variant.metadata.gold.forEach((goldItem:any) => {
       const goldType = goldItem.carat;
       const goldWeight = parseFloat(goldItem.gram);
-      const goldPriceData = prices.find((price:any) => price.type === goldType && price.jewelery_type === 'gold');
+      const goldPriceData = prices.find((price:any) => price.type == goldType && price.jewelery_type == 'gold');
+      console.log(goldPriceData)
       if (goldPriceData) {
         totalCost += goldWeight * goldPriceData.price;
       }
@@ -118,7 +119,8 @@ async function calculateTotalPrice(variants:any[]) {
     variant.metadata.diamonds.forEach((diamondItem:any) => {
       const diamondType = diamondItem.carat;
       const diamondQuantity = parseInt(diamondItem.quantity);
-      const diamondPriceData = prices.find((price:any) => price.type === diamondType && price.jewelery_type === 'diamond');
+      const diamondPriceData = prices.find((price:any) => price.type == diamondType && price.jewelery_type == 'diamond');
+      console.log(diamondPriceData)
       if (diamondPriceData) {
         totalCost += diamondQuantity * diamondPriceData.price;
       }
@@ -132,8 +134,10 @@ async function calculateTotalPrice(variants:any[]) {
     const profitMargin = parseFloat(variant.metadata.profitMargin) / 100;
     totalCost += totalCost * profitMargin;
 
+    console.log(totalCost)
+
     return {
-      amount: totalCost,
+      amount: totalCost*100,
       variant_id: variant.id,
       currency_code: 'usd',
       max_quantity: 1,
@@ -280,6 +284,7 @@ async function calculateTotalPrice(variants:any[]) {
   ) => {
     console.log(JSON.stringify(variants))
     calculateTotalPrice(variants).then(async (result) => {
+      console.log("result for price calculator",result)
       handleCreate({
         name: 'Pricing',
         description: 'For products',
