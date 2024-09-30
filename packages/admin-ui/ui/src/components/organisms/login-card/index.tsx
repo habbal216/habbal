@@ -82,8 +82,8 @@ const LoginCard = ({ toResetPassword }: LoginCardProps) => {
     const medusa = new Medusa({ baseUrl: MEDUSA_BACKEND_URL, maxRetries: 3 })
     medusa.admin.auth
       .getToken({
-        email: "admin@medusa-test.com",
-        password: "1234",
+        email: "admin@habbal.com",
+        password: "supersecret",
       })
       .then(({ access_token }) => {
         console.log(access_token)
