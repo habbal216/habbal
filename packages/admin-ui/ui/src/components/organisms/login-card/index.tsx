@@ -20,7 +20,7 @@ type LoginCardProps = {
 }
 
 const LoginCard = ({ toResetPassword }: LoginCardProps) => {
-  let MEDUSA_BACKEND_URL = "http://localhost:9000"
+  let MEDUSA_BACKEND_URL = "https://api.devstarx.com"
 
   const {
     register,
