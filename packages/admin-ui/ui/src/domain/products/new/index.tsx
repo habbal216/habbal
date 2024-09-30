@@ -1,7 +1,17 @@
 //@ts-ignore
-import { AdminPostProductsReq, ProductVariant, PriceListStatus, PriceListType } from "@medusajs/medusa"
+import {
+  AdminPostProductsReq,
+  ProductVariant,
+  PriceListStatus,
+  PriceListType,
+} from "@medusajs/medusa"
 //@ts-ignore
-import { useAdminCreateProduct, useMedusa,useAdminCreatePriceList } from "medusa-react"
+import {
+  useAdminCreateProduct,
+  useMedusa,
+  useAdminCreatePriceList,
+  useAdminGetSession,
+} from "medusa-react"
 import { useForm, useWatch } from "react-hook-form"
 import CustomsForm, {
   CustomsFormType,
@@ -77,6 +87,7 @@ type CreateData = {
 }
 
 const NewProduct = ({ onClose }: Props) => {
+  const { user } = useAdminGetSession()
   const { t } = useTranslation()
   const form = useForm<NewProductForm>({
     defaultValues: createBlank(),
@@ -94,59 +105,82 @@ const NewProduct = ({ onClose }: Props) => {
     control: form.control,
     name: "dimensions",
   })
+  ////////////////////////////////////
+  //Customerproducts
+  async function addCustomData(productId: string, customerId: string) {
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/store/custom/CustomerProducts",
+        {
+          productid: productId,
+          customerid: customerId,
+        }
+      )
 
+      return response.data
+    } catch (error) {
+      console.error("Error adding custom data:", error)
+      throw error // Re-throw error so the calling function can handle it
+    }
+  }
+  /////
+  async function calculateTotalPrice(variants: any[]) {
+    const response = await axios.get(
+      "http://localhost:9000/store/custom/getJeweleryData"
+    )
+    const prices = response.data
 
-async function calculateTotalPrice(variants:any[]) {
+    const result = variants.map((variant: any) => {
+      let totalCost = 0
 
-  const response = await axios.get('http://localhost:9000/store/custom/getJeweleryData');
-  const prices = response.data;
+      // Calculate gold cost
+      variant.metadata.gold.forEach((goldItem: any) => {
+        const goldType = goldItem.carat
+        const goldWeight = parseFloat(goldItem.gram)
+        const goldPriceData = prices.find(
+          (price: any) =>
+            price.type == goldType && price.jewelery_type == "gold"
+        )
+        console.log(goldPriceData)
+        if (goldPriceData) {
+          totalCost += goldWeight * goldPriceData.price
+        }
+      })
 
-  const result = variants.map((variant:any) => {
-    let totalCost = 0;
+      // Calculate diamond cost
+      variant.metadata.diamonds.forEach((diamondItem: any) => {
+        const diamondType = diamondItem.carat
+        const diamondQuantity = parseInt(diamondItem.quantity)
+        const diamondPriceData = prices.find(
+          (price: any) =>
+            price.type == diamondType && price.jewelery_type == "diamond"
+        )
+        console.log(diamondPriceData)
+        if (diamondPriceData) {
+          totalCost += diamondQuantity * diamondPriceData.price
+        }
+      })
 
-    // Calculate gold cost
-    variant.metadata.gold.forEach((goldItem:any) => {
-      const goldType = goldItem.carat;
-      const goldWeight = parseFloat(goldItem.gram);
-      const goldPriceData = prices.find((price:any) => price.type == goldType && price.jewelery_type == 'gold');
-      console.log(goldPriceData)
-      if (goldPriceData) {
-        totalCost += goldWeight * goldPriceData.price;
+      // Add labor cost
+      const laborCost = parseFloat(variant.metadata.laborCost)
+      totalCost += laborCost
+
+      // Apply profit margin
+      const profitMargin = parseFloat(variant.metadata.profitMargin) / 100
+      totalCost += totalCost * profitMargin
+
+      console.log(totalCost)
+
+      return {
+        amount: totalCost * 100,
+        variant_id: variant.id,
+        currency_code: "usd",
+        max_quantity: 1,
       }
-    });
+    })
 
-    // Calculate diamond cost
-    variant.metadata.diamonds.forEach((diamondItem:any) => {
-      const diamondType = diamondItem.carat;
-      const diamondQuantity = parseInt(diamondItem.quantity);
-      const diamondPriceData = prices.find((price:any) => price.type == diamondType && price.jewelery_type == 'diamond');
-      console.log(diamondPriceData)
-      if (diamondPriceData) {
-        totalCost += diamondQuantity * diamondPriceData.price;
-      }
-    });
-
-    // Add labor cost
-    const laborCost = parseFloat(variant.metadata.laborCost);
-    totalCost += laborCost;
-
-    // Apply profit margin
-    const profitMargin = parseFloat(variant.metadata.profitMargin) / 100;
-    totalCost += totalCost * profitMargin;
-
-    console.log(totalCost)
-
-    return {
-      amount: totalCost*100,
-      variant_id: variant.id,
-      currency_code: 'usd',
-      max_quantity: 1,
-    };
-  });
-
-  return result;
-}
-
+    return result
+  }
 
   const {
     handleSubmit,
@@ -182,8 +216,11 @@ async function calculateTotalPrice(variants:any[]) {
       const payload = createPayload(
         data,
         publish,
-        isFeatureEnabled("sales_channels")
+        isFeatureEnabled("sales_channels"),
+        user?.role
       )
+
+      console.log("payload",payload)
 
       if (data.media?.images?.length) {
         let preppedImages: FormImage[] = []
@@ -212,6 +249,7 @@ async function calculateTotalPrice(variants:any[]) {
         }
         const urls = preppedImages.map((image) => image.url)
 
+        //@ts-ignore
         payload.images = urls
       }
 
@@ -242,20 +280,22 @@ async function calculateTotalPrice(variants:any[]) {
         }
         const urls = preppedImages.map((image) => image.url)
 
+        //@ts-ignore
         payload.thumbnail = urls[0]
       }
 
       mutate(payload, {
         onSuccess: ({ product }:any) => {
+          addCustomData(product.id, user.id)
           createStockLocationsForVariants(
             product.variants,
             optionsToStockLocationsMap
-          ).then(() => {
+          ).then(() => {       /////////
             closeAndReset()
             navigate(`/a/products/${product.id}`)
           })
         },
-        onError: (err:any) => {
+        onError: (err: any) => {
           notification(t("new-error", "Error"), getErrorMessage(err), "error")
         },
       })
@@ -265,13 +305,11 @@ async function calculateTotalPrice(variants:any[]) {
 
   const createPriceList = useAdminCreatePriceList()
 
-  const handleCreate = (
-    data: CreateData
-  ) => {
+  const handleCreate = (data: CreateData) => {
     createPriceList.mutate(data, {
-      onSuccess: ({ price_list }:any) => {
+      onSuccess: ({ price_list }: any) => {
         console.log(price_list.id)
-      }
+      },
     })
   }
 
@@ -285,45 +323,45 @@ async function calculateTotalPrice(variants:any[]) {
     console.log(JSON.stringify(variants))
     calculateTotalPrice(variants).then(async (result) => {
       console.log("result for price calculator",result)
-      handleCreate({
+        handleCreate({
         name: 'Pricing',
         description: 'For products',
         type: 'override',
         status: 'active',
         prices: result
-      })
-      await Promise.all(
-        variants
-          .map(async (variant) => {
-            const optionsKey = variant.options
-              .map((option:any) => option?.value || "")
-              .sort()
-              .join(",")
-  
-            const stock_locations = stockLocationsMap.get(optionsKey)
-            if (!stock_locations?.length) {
-              return
-            }
-  
+        })
+        await Promise.all(
+          variants
+            .map(async (variant) => {
+              const optionsKey = variant.options
+                .map((option: any) => option?.value || "")
+                .sort()
+                .join(",")
+
+              const stock_locations = stockLocationsMap.get(optionsKey)
+              if (!stock_locations?.length) {
+                return
+              }
+
             const inventory = await client.admin.variants.getInventory(variant.id)
-  
-            return await Promise.all(
-              inventory.variant.inventory
+
+              return await Promise.all(
+                inventory.variant.inventory
                 .map(async (item:any) => {
-                  return Promise.all(
-                    stock_locations.map(async (stock_location) => {
+                    return Promise.all(
+                      stock_locations.map(async (stock_location) => {
                       client.admin.inventoryItems.createLocationLevel(item.id!, {
-                        location_id: stock_location.location_id,
-                        stocked_quantity: stock_location.stocked_quantity,
+                            location_id: stock_location.location_id,
+                            stocked_quantity: stock_location.stocked_quantity,
                       })
-                    })
-                  )
-                })
-                .flat()
-            )
-          })
-          .flat()
-      )
+                      })
+                    )
+                  })
+                  .flat()
+              )
+            })
+            .flat()
+        )
       }).catch(error => {
         console.error(error);
       });
@@ -352,15 +390,17 @@ async function calculateTotalPrice(variants:any[]) {
               >
                 {t("new-save-as-draft", "Save as draft")}
               </Button>
-              <Button
-                size="small"
-                variant="primary"
-                type="button"
-                disabled={!isDirty}
-                onClick={onSubmit(true)}
-              >
-                {t("new-publish-product", "Publish product")}
-              </Button>
+              {user?.role === "admin" && (
+                <Button
+                  size="small"
+                  variant="primary"
+                  type="button"
+                  disabled={!isDirty}
+                  onClick={onSubmit(true)}
+                >
+                  {t("new-publish-product", "Publish product")}
+                </Button>
+              )}
             </div>
           </div>
         </FocusModal.Header>
@@ -386,32 +426,37 @@ async function calculateTotalPrice(variants:any[]) {
                     form={nestedForm(form, "general")}
                     requireHandle={false}
                   />
-                  <DiscountableForm form={nestedForm(form, "discounted")} />
-                </div>
-              </Accordion.Item>
-              <Accordion.Item title="Organize" value="organize">
-                <p className="inter-base-regular text-grey-50">
-                  {t(
-                    "new-to-start-selling-all-you-need-is-a-name-and-a-price",
-                    "To start selling, all you need is a name and a price."
+                  {user?.role === "admin" && (
+                    <DiscountableForm form={nestedForm(form, "discounted")} />
                   )}
-                </p>
-                <div className="mt-xlarge gap-y-xlarge pb-xsmall flex flex-col">
-                  <div>
-                    <h3 className="inter-base-semibold mb-base">
-                      {t("new-organize-product", "Organize Product")}
-                    </h3>
-                    <OrganizeForm form={nestedForm(form, "organize")} />
-                    <FeatureToggle featureFlag="sales_channels">
-                      <div className="mt-xlarge">
-                        <AddSalesChannelsForm
-                          form={nestedForm(form, "salesChannels")}
-                        />
-                      </div>
-                    </FeatureToggle>
-                  </div>
                 </div>
               </Accordion.Item>
+              {user?.role === "admin" && (
+                <Accordion.Item title="Organize" value="organize">
+                  <p className="inter-base-regular text-grey-50">
+                    {t(
+                      "new-to-start-selling-all-you-need-is-a-name-and-a-price",
+                      "To start selling, all you need is a name and a price."
+                    )}
+                  </p>
+                  <div className="mt-xlarge gap-y-xlarge pb-xsmall flex flex-col">
+                    <div>
+                      <h3 className="inter-base-semibold mb-base">
+                        {t("new-organize-product", "Organize Product")}
+                      </h3>
+                      <OrganizeForm form={nestedForm(form, "organize")} />
+                      <FeatureToggle featureFlag="sales_channels">
+                        <div className="mt-xlarge">
+                          <AddSalesChannelsForm
+                            form={nestedForm(form, "salesChannels")}
+                          />
+                        </div>
+                      </FeatureToggle>
+                    </div>
+                  </div>
+                </Accordion.Item>
+              )}
+
               <Accordion.Item title="Variants" value="variants">
                 <p className="inter-base-regular text-grey-50">
                   {t(
@@ -432,26 +477,28 @@ async function calculateTotalPrice(variants:any[]) {
                   />
                 </div>
               </Accordion.Item>
-              <Accordion.Item title="Attributes" value="attributes">
-                <p className="inter-base-regular text-grey-50">
-                  {t(
-                    "new-used-for-shipping-and-customs-purposes",
-                    "Used for shipping and customs purposes."
-                  )}
-                </p>
-                <div className="my-xlarge">
-                  <h3 className="inter-base-semibold mb-base">
-                    {t("new-dimensions", "Dimensions")}
-                  </h3>
-                  <DimensionsForm form={nestedForm(form, "dimensions")} />
-                </div>
-                <div>
-                  <h3 className="inter-base-semibold mb-base">
-                    {t("new-customs", "Customs")}
-                  </h3>
-                  <CustomsForm form={nestedForm(form, "customs")} />
-                </div>
-              </Accordion.Item>
+              {user?.role === "admin" && (
+                <Accordion.Item title="Attributes" value="attributes">
+                  <p className="inter-base-regular text-grey-50">
+                    {t(
+                      "new-used-for-shipping-and-customs-purposes",
+                      "Used for shipping and customs purposes."
+                    )}
+                  </p>
+                  <div className="my-xlarge">
+                    <h3 className="inter-base-semibold mb-base">
+                      {t("new-dimensions", "Dimensions")}
+                    </h3>
+                    <DimensionsForm form={nestedForm(form, "dimensions")} />
+                  </div>
+                  <div>
+                    <h3 className="inter-base-semibold mb-base">
+                      {t("new-customs", "Customs")}
+                    </h3>
+                    <CustomsForm form={nestedForm(form, "customs")} />
+                  </div>
+                </Accordion.Item>
+              )}
               <Accordion.Item title="Thumbnail" value="thumbnail">
                 <p className="inter-base-regular mb-large text-grey-50">
                   {t(
@@ -478,11 +525,15 @@ async function calculateTotalPrice(variants:any[]) {
   )
 }
 
+interface UserRole extends AdminPostProductsReq {
+  role: string
+}
 const createPayload = (
   data: NewProductForm,
   publish = true,
-  salesChannelsEnabled = false
-): AdminPostProductsReq => {
+  salesChannelsEnabled = false,
+  role = "admin"
+): UserRole => {
   // console.log(data)
   const payload: AdminPostProductsReq = {
     title: data.general.title,
@@ -550,6 +601,11 @@ const createPayload = (
     }))
   }
 
+  {
+    role === "member" &&
+      (payload.sales_channels = [{ id: "sc_01J918R20KC4HPQ7Q2QWWKAV22" }])
+  }
+
   return payload
 }
 
@@ -600,8 +656,8 @@ const createBlank = (): NewProductForm => {
 
 const getVariantPrices = (prices: PricesFormType) => {
   const priceArray = prices.prices
-    .filter((price) => typeof price.amount === "number")
-    .map((price) => {
+    .filter((price:any) => typeof price.amount === "number")
+    .map((price:any) => {
       return {
         amount: price.amount as number,
         currency_code: price.region_id ? undefined : price.currency_code,

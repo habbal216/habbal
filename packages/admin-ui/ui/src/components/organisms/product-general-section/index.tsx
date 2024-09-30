@@ -17,12 +17,14 @@ import StatusSelector from "../../molecules/status-selector"
 import Section from "../section"
 import ChannelsModal from "./channels-modal"
 import GeneralModal from "./general-modal"
+import { useAdminGetSession } from "medusa-react"
 
 type Props = {
   product: Product
 }
 
 const ProductGeneralSection = ({ product }: Props) => {
+  const { user } = useAdminGetSession()
   const { t } = useTranslation()
   const { onDelete, onStatusChange } = useEditProductActions(product.id)
   const {
@@ -87,6 +89,7 @@ const ProductGeneralSection = ({ product }: Props) => {
         </p>
         <ProductTags product={product} />
         <ProductDetails product={product} />
+        {/* {user?.role === "admin" && <ProductSalesChannels product={product} />} */}
         <ProductSalesChannels product={product} />
       </Section>
 

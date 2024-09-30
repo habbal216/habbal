@@ -1,6 +1,7 @@
 import {
   adminInventoryItemsKeys,
   useAdminDeleteProduct,
+  useAdminGetSession,
   useAdminUpdateProduct,
   useMedusa,
 } from "medusa-react"
@@ -22,6 +23,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 
 const useProductActions = (product: Product) => {
+  const { user } = useAdminGetSession()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const notification = useNotification()
@@ -63,67 +65,77 @@ const useProductActions = (product: Product) => {
     }
   }
 
-  const getActions = (): ActionType[] => [
-    {
+  const getActions = (): ActionType[] => {
+    const actions: ActionType[] = []
+
+    actions.push({
       label: t("product-table-edit", "Edit"),
       onClick: () => navigate(`/a/products/${product.id}`),
       icon: <EditIcon size={20} />,
-    },
-    {
-      label:
-        product.status === "published"
-          ? t("product-table-unpublish", "Unpublish")
-          : t("product-table-publish", "Publish"),
-      onClick: () => {
-        const newStatus = product.status === "published" ? "draft" : "published"
-        updateProduct.mutate(
-          {
-            status: newStatus,
-          },
-          {
-            onSuccess: () => {
-              notification(
-                t("product-table-success", "Success"),
-                product.status === "published"
-                  ? t(
-                      "product-table-successfully-unpublished-product",
-                      "Successfully unpublished product"
-                    )
-                  : t(
-                      "product-table-successfully-published-product",
-                      "Successfully published product"
-                    ),
-                "success"
-              )
+    })
+
+    if (user?.role === "admin") {
+      actions.push({
+        label:
+          product.status === "published"
+            ? t("product-table-unpublish", "Unpublish")
+            : t("product-table-publish", "Publish"),
+        onClick: () => {
+          const newStatus =
+            product.status === "published" ? "draft" : "published"
+          updateProduct.mutate(
+            {
+              status: newStatus,
             },
-            onError: (err) =>
-              notification(
-                t("product-table-error", "Error"),
-                getErrorMessage(err),
-                "error"
-              ),
-          }
-        )
-      },
-      icon:
-        product.status === "published" ? (
-          <UnpublishIcon size={20} />
-        ) : (
-          <PublishIcon size={20} />
-        ),
-    },
-    {
+            {
+              onSuccess: () => {
+                notification(
+                  t("product-table-success", "Success"),
+                  product.status === "published"
+                    ? t(
+                        "product-table-successfully-unpublished-product",
+                        "Successfully unpublished product"
+                      )
+                    : t(
+                        "product-table-successfully-published-product",
+                        "Successfully published product"
+                      ),
+                  "success"
+                )
+              },
+              onError: (err) =>
+                notification(
+                  t("product-table-error", "Error"),
+                  getErrorMessage(err),
+                  "error"
+                ),
+            }
+          )
+        },
+        icon:
+          product.status === "published" ? (
+            <UnpublishIcon size={20} />
+          ) : (
+            <PublishIcon size={20} />
+          ),
+      })
+    }
+
+    actions.push({
       label: t("product-table-duplicate", "Duplicate"),
       onClick: () => copyProduct(product),
       icon: <DuplicateIcon size={20} />,
-    },
-    {
+    })
+
+    actions.push({
       label: t("product-table-delete", "Delete"),
       variant: "danger",
       onClick: handleDelete,
       icon: <TrashIcon size={20} />,
-    },
-  ]
+    })
+
+    return actions
+  }
 
   return {
     getActions,

@@ -1,4 +1,8 @@
-import { useAdminCreateBatchJob, useAdminCreateCollection } from "medusa-react"
+import {
+  useAdminCreateBatchJob,
+  useAdminCreateCollection,
+  useAdminGetSession,
+} from "medusa-react"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
@@ -26,6 +30,7 @@ import NewProduct from "../new"
 const VIEWS = ["products", "collections"]
 
 const Overview = () => {
+  const { user } = useAdminGetSession()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -71,32 +76,48 @@ const Overview = () => {
     switch (view) {
       case "products":
         return (
-          <div className="flex space-x-2">
-            <Button
-              variant="secondary"
-              size="small"
-              onClick={() => openImportModal()}
-            >
-              <UploadIcon size={20} />
-              {t("overview-import-products", "Import Products")}
-            </Button>
-            <Button
-              variant="secondary"
-              size="small"
-              onClick={() => openExportModal()}
-            >
-              <ExportIcon size={20} />
-              {t("overview-export-products", "Export Products")}
-            </Button>
-            <Button
-              variant="secondary"
-              size="small"
-              onClick={openProductCreate}
-            >
-              <PlusIcon size={20} />
-              {t("overview-new-product", "New Product")}
-            </Button>
-          </div>
+          <>
+            {user?.role === "admin" && (
+              <div className="flex space-x-2">
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={() => openImportModal()}
+                >
+                  <UploadIcon size={20} />
+                  {t("overview-import-products", "Import Products")}
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={() => openExportModal()}
+                >
+                  <ExportIcon size={20} />
+                  {t("overview-export-products", "Export Products")}
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={openProductCreate}
+                >
+                  <PlusIcon size={20} />
+                  {t("overview-new-product", "New Product")}
+                </Button>
+              </div>
+            )}
+            {user?.role === "member" && (
+              <div className="flex space-x-2">
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={openProductCreate}
+                >
+                  <PlusIcon size={20} />
+                  {t("overview-new-product", "New Product")}
+                </Button>
+              </div>
+            )}
+          </>
         )
 
       default:

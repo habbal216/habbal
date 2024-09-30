@@ -1,4 +1,4 @@
-import { useAdminStore } from "medusa-react"
+import { useAdminGetSession, useAdminStore } from "medusa-react"
 import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -20,6 +20,8 @@ import UserMenu from "../../molecules/user-menu"
 const ICON_SIZE = 20
 
 const Sidebar: React.FC = () => {
+  const { user } = useAdminGetSession()
+
   const { t } = useTranslation()
   const [currentlyOpen, setCurrentlyOpen] = useState(-1)
 
@@ -59,81 +61,93 @@ const Sidebar: React.FC = () => {
             {store?.name}
           </span>
         </div>
-        <div className="py-3.5">
-          <SidebarMenuItem
-            pageLink={"/a/orders"}
-            icon={<CartIcon size={ICON_SIZE} />}
-            triggerHandler={triggerHandler}
-            text={t("sidebar-orders", "Orders")}
-          />
-          <SidebarMenuItem
-            pageLink={"/a/products"}
-            icon={<TagIcon size={ICON_SIZE} />}
-            text={t("sidebar-products", "Products")}
-            triggerHandler={triggerHandler}
-          />
-          {isFeatureEnabled("product_categories") && (
+        {user?.role === "admin" && (
+          <div className="py-3.5">
             <SidebarMenuItem
-              pageLink={"/a/product-categories"}
-              icon={<SwatchIcon size={ICON_SIZE} />}
-              text={t("sidebar-categories", "Categories")}
+              pageLink={"/a/orders"}
+              icon={<CartIcon size={ICON_SIZE} />}
+              triggerHandler={triggerHandler}
+              text={t("sidebar-orders", "Orders")}
+            />
+            <SidebarMenuItem
+              pageLink={"/a/products"}
+              icon={<TagIcon size={ICON_SIZE} />}
+              text={t("sidebar-products", "Products")}
               triggerHandler={triggerHandler}
             />
-          )}
-          <SidebarMenuItem
-            pageLink={"/a/customers"}
-            icon={<UsersIcon size={ICON_SIZE} />}
-            triggerHandler={triggerHandler}
-            text={t("sidebar-customers", "Customers")}
-          />
-          {inventoryEnabled && (
-            <SidebarMenuItem
-              pageLink={"/a/inventory"}
-              icon={<BuildingsIcon size={ICON_SIZE} />}
-              triggerHandler={triggerHandler}
-              text={t("sidebar-inventory", "Inventory")}
-            />
-          )}
-          <SidebarMenuItem
-            pageLink={"/a/discounts"}
-            icon={<SaleIcon size={ICON_SIZE} />}
-            triggerHandler={triggerHandler}
-            text={t("sidebar-discounts", "Discounts")}
-          />
-          <SidebarMenuItem
-            pageLink={"/a/gift-cards"}
-            icon={<GiftIcon size={ICON_SIZE} />}
-            triggerHandler={triggerHandler}
-            text={t("sidebar-gift-cards", "Gift Cards")}
-          />
-          <SidebarMenuItem
-            pageLink={"/a/pricing"}
-            icon={<CashIcon size={ICON_SIZE} />}
-            triggerHandler={triggerHandler}
-            text={t("sidebar-pricing", "Pricing")}
-          />
-          {getLinks().map(({ path, label, icon }, index) => {
-            const cleanLink = path.replace("/a/", "")
-
-            const Icon = icon ? icon : SquaresPlus
-
-            return (
+            {isFeatureEnabled("product_categories") && (
               <SidebarMenuItem
-                key={index}
-                pageLink={`/a${cleanLink}`}
-                icon={icon ? <Icon /> : <SquaresPlus size={ICON_SIZE} />}
+                pageLink={"/a/product-categories"}
+                icon={<SwatchIcon size={ICON_SIZE} />}
+                text={t("sidebar-categories", "Categories")}
                 triggerHandler={triggerHandler}
-                text={label}
               />
-            )
-          })}
-          <SidebarMenuItem
-            pageLink={"/a/settings"}
-            icon={<GearIcon size={ICON_SIZE} />}
-            triggerHandler={triggerHandler}
-            text={t("sidebar-settings", "Settings")}
-          />
-        </div>
+            )}
+            <SidebarMenuItem
+              pageLink={"/a/customers"}
+              icon={<UsersIcon size={ICON_SIZE} />}
+              triggerHandler={triggerHandler}
+              text={t("sidebar-customers", "Customers")}
+            />
+            {inventoryEnabled && (
+              <SidebarMenuItem
+                pageLink={"/a/inventory"}
+                icon={<BuildingsIcon size={ICON_SIZE} />}
+                triggerHandler={triggerHandler}
+                text={t("sidebar-inventory", "Inventory")}
+              />
+            )}
+            <SidebarMenuItem
+              pageLink={"/a/discounts"}
+              icon={<SaleIcon size={ICON_SIZE} />}
+              triggerHandler={triggerHandler}
+              text={t("sidebar-discounts", "Discounts")}
+            />
+            <SidebarMenuItem
+              pageLink={"/a/gift-cards"}
+              icon={<GiftIcon size={ICON_SIZE} />}
+              triggerHandler={triggerHandler}
+              text={t("sidebar-gift-cards", "Gift Cards")}
+            />
+            <SidebarMenuItem
+              pageLink={"/a/pricing"}
+              icon={<CashIcon size={ICON_SIZE} />}
+              triggerHandler={triggerHandler}
+              text={t("sidebar-pricing", "Pricing")}
+            />
+            {getLinks().map(({ path, label, icon }, index) => {
+              const cleanLink = path.replace("/a/", "")
+
+              const Icon = icon ? icon : SquaresPlus
+
+              return (
+                <SidebarMenuItem
+                  key={index}
+                  pageLink={`/a${cleanLink}`}
+                  icon={icon ? <Icon /> : <SquaresPlus size={ICON_SIZE} />}
+                  triggerHandler={triggerHandler}
+                  text={label}
+                />
+              )
+            })}
+            <SidebarMenuItem
+              pageLink={"/a/settings"}
+              icon={<GearIcon size={ICON_SIZE} />}
+              triggerHandler={triggerHandler}
+              text={t("sidebar-settings", "Settings")}
+            />
+          </div>
+        )}
+        {user?.role === "member" && (
+          <div className="py-3.5">
+            <SidebarMenuItem
+              pageLink={"/a/products"}
+              icon={<TagIcon size={ICON_SIZE} />}
+              text={t("sidebar-products", "Products")}
+              triggerHandler={triggerHandler}
+            />
+          </div>
+        )}
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { useAdminProduct } from "medusa-react"
+import { useAdminGetSession, useAdminProduct } from "medusa-react"
 import { useNavigate, useParams } from "react-router-dom"
 import BackButton from "../../../components/atoms/back-button"
 import Spinner from "../../../components/atoms/spinner"
@@ -13,6 +13,7 @@ import { useWidgets } from "../../../providers/widget-provider"
 import { getErrorStatus } from "../../../utils/get-error-status"
 
 const Edit = () => {
+  const { user } = useAdminGetSession()
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -65,7 +66,9 @@ const Edit = () => {
           <div className="gap-y-xsmall col-span-8 flex flex-col">
             <ProductGeneralSection product={product} />
             <ProductVariantsSection product={product} />
-            <ProductAttributesSection product={product} />
+            {user?.role === "admin" && (
+              <ProductAttributesSection product={product} />
+            )}
             {getWidgets("product.details.after").map((w, i) => {
               return (
                 <WidgetContainer

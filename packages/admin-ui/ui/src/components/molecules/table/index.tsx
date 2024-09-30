@@ -78,7 +78,9 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
           {filteringOptions ? (
             <div className="mb-2 flex self-end">
               {Array.isArray(filteringOptions)
-                ? filteringOptions.map((fo, idx) => <FilteringOptions {...fo} key={idx} />)
+                ? filteringOptions.map((fo, idx) => (
+                    <FilteringOptions {...fo} key={idx} />
+                  ))
                 : filteringOptions}
             </div>
           ) : (
@@ -118,7 +120,7 @@ Table.Head = React.forwardRef<
   <thead
     ref={ref}
     className={clsx(
-      "inter-small-semibold text-grey-50 border-grey-20 whitespace-nowrap border-t border-b",
+      "inter-small-semibold text-grey-50 border-grey-20 whitespace-nowrap border-b border-t",
       className
     )}
     {...props}
@@ -238,7 +240,7 @@ Table.Row = React.forwardRef<HTMLTableRowElement, TableRowProps>(
       <tr
         ref={ref}
         className={clsx(
-          "inter-small-regular border-grey-20 text-grey-90 border-t border-b",
+          "inter-small-regular border-grey-20 text-grey-90 border-b border-t",
           className,
           {
             "hover:bg-grey-5 cursor-pointer": linkTo !== undefined || clickable,

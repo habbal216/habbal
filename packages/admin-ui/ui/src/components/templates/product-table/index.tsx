@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash"
-import { useAdminProducts } from "medusa-react"
+import { useAdminGetSession, useAdminProducts } from "medusa-react"
 import qs from "qs"
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -14,6 +14,7 @@ import ProductOverview from "./overview"
 import useProductActions from "./use-product-actions"
 import useProductTableColumn from "./use-product-column"
 import { useProductFilters } from "./use-product-filters"
+import axios from "axios"
 
 const DEFAULT_PAGE_SIZE = 15
 const DEFAULT_PAGE_SIZE_TILE_VIEW = 18
@@ -26,6 +27,9 @@ const defaultQueryProps = {
 }
 
 const ProductTable = () => {
+  const { user } = useAdminGetSession()
+  const [datax, setDatax] = useState(["prod_01J8YA15GZDRJF02XYXXYZ60D8"])
+
   const location = useLocation()
   const { t } = useTranslation()
 
@@ -66,16 +70,43 @@ const ProductTable = () => {
     setQuery("")
   }
 
+  async function getCustomerProducts() {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/store/custom/CustomerProducts?id=${user?.id}`
+      )
+
+      // Handle the successful response
+      const result = response.data.result
+      result.length === 0
+        ? setDatax(["prod_01J8YA15GZDRJF02XYXXYZ60D8"])
+        : setDatax(response.data.result)
+
+      return response.data // Return the data if needed for further use
+    } catch (error) {
+      // Handle error
+      console.error("Error fetching customer products:", error)
+      throw error
+    }
+  }
+
   const { products, isLoading, count } = useAdminProducts(
     {
       ...queryObject,
+      id: user?.role === "member" ? datax : [],
     },
     {
       keepPreviousData: true,
       onSuccess: ({ count }) => trackNumberOfProducts({ count }),
     }
   )
+  console.log(user)
 
+  useEffect(() => {
+    {
+      user?.role === "member" && getCustomerProducts()
+    }
+  }, [])
   useEffect(() => {
     if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / limit)
