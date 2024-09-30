@@ -603,7 +603,7 @@ const createPayload = (
 
   {
     role === "member" &&
-      (payload.sales_channels = [{ id: "sc_01J918R20KC4HPQ7Q2QWWKAV22" }])
+      (payload.sales_channels = [{ id: "sc_01J8SWSKMC9ES4367P1KB8TR3W" }]) //sc_01J8SWSKMC9ES4367P1KB8TR3W
   }
 
   return payload
