@@ -9,6 +9,7 @@ import WidgetContainer from "../../extensions/widget-container"
 import Button from "../../fundamentals/button"
 import SigninInput from "../../molecules/input-signin"
 import Medusa from "@medusajs/medusa-js"
+import { MEDUSA_BACKEND_URL } from "../../../constants/medusa-backend-url"
 
 type FormValues = {
   email: string
@@ -20,7 +21,6 @@ type LoginCardProps = {
 }
 
 const LoginCard = ({ toResetPassword }: LoginCardProps) => {
-  let MEDUSA_BACKEND_URL = "https://api.devstarx.com"
 
   const {
     register,
