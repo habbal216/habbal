@@ -110,7 +110,7 @@ const NewProduct = ({ onClose }: Props) => {
   async function addCustomData(productId: string, customerId: string) {
     try {
       const response = await axios.post(
-        "http://localhost:9000/store/custom/CustomerProducts",
+        "https://api.devstarx.com/store/custom/CustomerProducts",
         {
           productid: productId,
           customerid: customerId,
@@ -126,7 +126,7 @@ const NewProduct = ({ onClose }: Props) => {
   /////
   async function calculateTotalPrice(variants: any[]) {
     const response = await axios.get(
-      "http://localhost:9000/store/custom/getJeweleryData"
+      "https://api.devstarx.com/store/custom/getJeweleryData"
     )
     const prices = response.data
 
