@@ -131,17 +131,17 @@ const NewProduct = ({ onClose }: Props) => {
     const prices = response.data
 
     const result = variants.map((variant: any) => {
+      console.log( variant.metadata)
       let totalCost = 0
-
       // Calculate gold cost
       variant.metadata.gold.forEach((goldItem: any) => {
-        const goldType = goldItem.carat
+        const goldType = goldItem.carat.value
         const goldWeight = parseFloat(goldItem.gram)
         const goldPriceData = prices.find(
           (price: any) =>
             price.type == goldType && price.jewelery_type == "gold"
         )
-        console.log(goldPriceData)
+        // console.log( variant.metadata.gold)
         if (goldPriceData) {
           totalCost += goldWeight * goldPriceData.price
         }
@@ -149,17 +149,45 @@ const NewProduct = ({ onClose }: Props) => {
 
       // Calculate diamond cost
       variant.metadata.diamonds.forEach((diamondItem: any) => {
-        const diamondType = diamondItem.carat
+        const diamondType = diamondItem.carat.value
         const diamondQuantity = parseInt(diamondItem.quantity)
         const diamondPriceData = prices.find(
           (price: any) =>
             price.type == diamondType && price.jewelery_type == "diamond"
         )
-        console.log(diamondPriceData)
+        // console.log( variant.metadata.diamonds)
         if (diamondPriceData) {
           totalCost += diamondQuantity * diamondPriceData.price
         }
       })
+
+          // Calculate silver cost
+    variant.metadata.silver.forEach((silverItem: any) => {
+      const silverType = silverItem.carat.value; // Assuming 'purity' defines type for silver
+      const silverWeight = parseFloat(silverItem.gram);
+      const silverPriceData = prices.find(
+        (price: any) =>
+          price.type === silverType && price.jewelery_type === "silver"
+      );
+      // console.log('Silver Price Data:',  variant.metadata.silver);
+      if (silverPriceData) {
+        totalCost += silverWeight * silverPriceData.price;
+      }
+    });
+
+    // Calculate platinum cost
+    variant.metadata.platinum.forEach((platinumItem: any) => {
+      const platinumType = platinumItem.carat.value; // Assuming 'purity' defines type for platinum
+      const platinumWeight = parseFloat(platinumItem.gram);
+      const platinumPriceData = prices.find(
+        (price: any) =>
+          price.type === platinumType && price.jewelery_type === "platinum"
+      );
+      // console.log('Platinum Price Data:',  variant.metadata.platinum);
+      if (platinumPriceData) {
+        totalCost += platinumWeight * platinumPriceData.price;
+      }
+    });
 
       // Add labor cost
       const laborCost = parseFloat(variant.metadata.laborCost)
@@ -168,6 +196,10 @@ const NewProduct = ({ onClose }: Props) => {
       // Apply profit margin
       const profitMargin = parseFloat(variant.metadata.profitMargin) / 100
       totalCost += totalCost * profitMargin
+
+          // Apply profit margin
+    const other = parseFloat(variant.metadata.otherCost)
+    totalCost += other ;
 
       console.log(totalCost)
 

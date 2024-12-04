@@ -11,7 +11,17 @@ type DiamondType = {
   quantity: string
 }
 
+type PlatinumType = {
+  carat: string
+  gram: string
+}
+
 type GoldType = {
+  carat: string
+  gram: string
+}
+
+type SilverType = {
   carat: string
   gram: string
 }
@@ -19,8 +29,11 @@ type GoldType = {
 export type JewelryFormType = {
   gold: GoldType[]
   diamonds: DiamondType[]
+  platinum: PlatinumType[]
+  silver: SilverType[]
   laborCost: string
   profitMargin: string
+  otherCost: string
 }
 
 type Props = {
@@ -47,6 +60,44 @@ const PriceCalculator = ({ form }: Props) => {
 
   const onDeleteDiamond = (index: number) => {
     removeDiamond(index)
+  }
+
+  const {
+    fields: silver,
+    append: appendSilver,
+    remove: removeSilver,
+  } = useFieldArray({
+    control,
+    name: path("silver"),
+    keyName: "fieldId",
+    shouldUnregister: true,
+  })
+
+  const appendNewSilver = () => {
+    appendSilver({ carat: "", gram: "" })
+  }
+
+  const onDeleteSilver = (index: number) => {
+    removeSilver(index)
+  }
+
+  const {
+    fields: platinum,
+    append: appendPlatinum,
+    remove: removePlatinum,
+  } = useFieldArray({
+    control,
+    name: path("platinum"),
+    keyName: "fieldId",
+    shouldUnregister: true,
+  })
+
+  const appendNewPlatinum= () => {
+    appendPlatinum({ carat: "", gram: "" })
+  }
+
+  const onDeletePlatinum = (index: number) => {
+    removePlatinum(index)
   }
 
   const {
@@ -190,6 +241,116 @@ const PriceCalculator = ({ form }: Props) => {
 
       <div className="mt-small">
         <div className="gap-y-xsmall grid grid-cols-1">
+          <h3 className="inter-base-semibold">{"Platinum"}</h3>
+          {platinum.map((field, index) => (
+            <div key={field.fieldId} className="gap-x-xsmall grid grid-cols-[1fr_1fr_40px]">
+              <Controller
+                control={control}
+                name={path(`platinum.${index}.carat`)}
+                render={({ field }) => (
+                  <Select<any>
+                  {...field}
+                  options={[
+                    { value: "999Plat", label: "999 Plat 999 Pt" },
+                    { value: "99Plat", label: "Plat 950 Pt 950" },
+                    { value: "9Plat", label: "950 Plat 50 Ruth 950 Pt 50 Ru" }
+                  ]}
+                  placeholder={"Select Carat"}
+                  isClearable
+                />
+                )}
+              />
+              <Controller
+                control={control}
+                name={path(`platinum.${index}.gram`)}
+                render={({ field }) => (
+                  <InputField
+                    placeholder={"grams"}
+                    {...field}
+                  />
+                )}
+              />
+              <Button
+                variant="secondary"
+                size="small"
+                type="button"
+                className="h-10"
+                onClick={() => onDeletePlatinum(index)}
+              >
+                <TrashIcon size={20} className="text-grey-40" />
+              </Button>
+            </div>
+          ))}
+          <Button
+            variant="secondary"
+            size="small"
+            className="mt-base h-10 w-full"
+            type="button"
+            onClick={appendNewPlatinum}
+          >
+            <PlusIcon size={20} />
+            <span>{"Add Platinum"}</span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-small">
+        <div className="gap-y-xsmall grid grid-cols-1">
+          <h3 className="inter-base-semibold">{"Silver"}</h3>
+          {silver.map((field, index) => (
+            <div key={field.fieldId} className="gap-x-xsmall grid grid-cols-[1fr_1fr_40px]">
+              <Controller
+                control={control}
+                name={path(`silver.${index}.carat`)}
+                render={({ field }) => (
+                  <Select<any>
+                  {...field}
+                  options={[
+                    { value: "sterling", label: "Sterling Silver" },
+                    { value: "fine", label: "Fine Silver" },
+                    { value: "argentium", label: "Argentium Silver" }
+                  ]}
+                  placeholder={"Select Quality"}
+                  isClearable
+                />
+                )}
+              />
+              <Controller
+                control={control}
+                name={path(`silver.${index}.gram`)}
+                render={({ field }) => (
+                  <InputField
+                    placeholder={"grams"}
+                    {...field}
+                  />
+                )}
+              />
+              <Button
+                variant="secondary"
+                size="small"
+                type="button"
+                className="h-10"
+                onClick={() => onDeleteSilver(index)}
+              >
+                <TrashIcon size={20} className="text-grey-40" />
+              </Button>
+            </div>
+          ))}
+          <Button
+            variant="secondary"
+            size="small"
+            className="mt-base h-10 w-full"
+            type="button"
+            onClick={appendNewSilver}
+          >
+            <PlusIcon size={20} />
+            <span>{"Add Silver"}</span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-small">
+        <div className="gap-y-xsmall grid grid-cols-1">
           <div className="gap-x-xsmall grid grid-cols-[230px_1fr_40px]">
             <InputField
               placeholder={"Labor Cost"}
@@ -207,6 +368,18 @@ const PriceCalculator = ({ form }: Props) => {
               placeholder={"Profit Margin"}
               label={"Profit Margin"}
               {...register(path("profitMargin"))}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-small">
+        <div className="gap-y-xsmall grid grid-cols-1">
+          <div className="gap-x-xsmall grid grid-cols-[230px_1fr_40px]">
+            <InputField
+              placeholder={"Other Cost"}
+              label={"Other Cost"}
+              {...register(path("otherCost"))}
             />
           </div>
         </div>
