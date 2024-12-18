@@ -110,7 +110,7 @@ const NewProduct = ({ onClose }: Props) => {
   async function addCustomData(productId: string, customerId: string) {
     try {
       const response = await axios.post(
-        "https://api.devstarx.com/store/custom/CustomerProducts",
+        "https://admin.habbals.com/store/custom/CustomerProducts",
         {
           productid: productId,
           customerid: customerId,
@@ -126,7 +126,7 @@ const NewProduct = ({ onClose }: Props) => {
   /////
   async function calculateTotalPrice(variants: any[]) {
     const response = await axios.get(
-      "https://api.devstarx.com/store/custom/getJeweleryData"
+      "https://admin.habbals.com/store/custom/getJeweleryData"
     )
     const prices = response.data
 
@@ -635,7 +635,7 @@ const createPayload = (
 
   {
     role === "member" &&
-      (payload.sales_channels = [{ id: "sc_01J8SWSKMC9ES4367P1KB8TR3W" }]) //sc_01J8SWSKMC9ES4367P1KB8TR3W
+      (payload.sales_channels = [{ id: "sc_01J918R20KC4HPQ7Q2QWWKAV22" }]) //sc_01J8SWSKMC9ES4367P1KB8TR3W
   }
 
   return payload
