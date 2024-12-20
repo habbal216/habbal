@@ -59,12 +59,12 @@ const settings: SettingsCardType[] = [
     icon: MapPinIcon,
     to: "/a/settings/regions",
   },
-  {
-    heading: "Return Reasons",
-    description: "Manage reasons for returned items",
-    icon: ArrowUTurnLeft,
-    to: "/a/settings/return-reasons",
-  },
+  // {
+  //   heading: "Return Reasons",
+  //   description: "Manage reasons for returned items",
+  //   icon: ArrowUTurnLeft,
+  //   to: "/a/settings/return-reasons",
+  // },
   {
     heading: "Sales Channels",
     description: "Control which product are available in which channels",
@@ -78,12 +78,12 @@ const settings: SettingsCardType[] = [
     icon: CrosshairIcon,
     to: "/a/settings/details",
   },
-  {
-    heading: "Taxes",
-    description: "Manage taxes across regions and products",
-    icon: TaxesIcon,
-    to: "/a/settings/taxes",
-  },
+  // {
+  //   heading: "Taxes",
+  //   description: "Manage taxes across regions and products",
+  //   icon: TaxesIcon,
+  //   to: "/a/settings/taxes",
+  // },
   {
     heading: "The Team",
     description: "Manage users of your Habbal Store",

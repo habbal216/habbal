@@ -87,14 +87,14 @@ const Overview = () => {
                   <UploadIcon size={20} />
                   {t("overview-import-products", "Import Products")}
                 </Button>
-                <Button
+                {/* <Button
                   variant="secondary"
                   size="small"
                   onClick={() => openExportModal()}
                 >
                   <ExportIcon size={20} />
                   {t("overview-export-products", "Export Products")}
-                </Button>
+                </Button> */}
                 <Button
                   variant="secondary"
                   size="small"
