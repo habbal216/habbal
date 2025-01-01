@@ -206,7 +206,7 @@ const NewProduct = ({ onClose }: Props) => {
       return {
         amount: totalCost * 100,
         variant_id: variant.id,
-        currency_code: "egp",
+        currency_code: "usd",
         max_quantity: 1,
       }
     })
