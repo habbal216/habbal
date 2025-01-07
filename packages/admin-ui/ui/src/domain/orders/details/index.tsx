@@ -178,6 +178,23 @@ const OrderDetails = () => {
     }
   )
 
+  const [manualPaymentDetails,setMaualPayDetails] = useState<any>(null)
+
+  const fetchManualPaymentDetails = async()=>{
+    try {
+      const response = await fetch(`https://admin.habbals.com/store/manual-payment-details?id=${order.cart_id}`);
+
+      const result = await response.json();
+      setMaualPayDetails(result.data)
+    } catch (error) {
+      console.error('Error fetching details:', error);
+    } 
+  }
+
+  useEffect(()=>{
+    fetchManualPaymentDetails()
+  },[order?.id])
+
   useEffect(() => {
     if (inventoryEnabled) {
       refetchReservations()
@@ -571,6 +588,25 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
+
+                <BodyCard
+                  className={"h-auto min-h-0 w-full"}
+                  title={"Payment Method Details"}
+                  // actionables={customerActionables}
+                >
+                  {manualPaymentDetails ?
+                  <div className="mt-2">
+                      <div className="flex flex-col">
+                        <div className="inter-small-regular flex flex-col">
+                          <span>{manualPaymentDetails?.metadata?.manual_payment_method || ""}</span>
+                          <span>{manualPaymentDetails?.metadata?.cash_details || manualPaymentDetails?.metadata?.crypto_wallet_address || manualPaymentDetails?.metadata?.wire_transfer_proof_url  || ""}</span>
+                        </div>
+                      </div>
+                  </div>:
+                  <Spinner />
+                  }
+                </BodyCard>
+
                 <div>
                   {getWidgets("order.details.after").map((widget, i) => {
                     return (
